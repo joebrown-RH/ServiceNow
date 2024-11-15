@@ -1,0 +1,17 @@
+---
+- name: Test connectivity to ServiceNow
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Retrieve incidents from ServiceNow
+      servicenow.servicenow.snow_record_find:
+        instance: "your_instance.servicenow.com"
+        username: "{{ ansible_user }}"
+        password: "{{ ansible_password }}"
+        table: "incident"
+        query: "active=true"
+      register: incidents
+
+    - name: Display retrieved incidents
+      debug:
+        var: incidents
